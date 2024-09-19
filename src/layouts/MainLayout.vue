@@ -14,6 +14,8 @@
         <q-toolbar-title>
           Pose Estimation
         </q-toolbar-title>
+
+        <q-btn color="primary" icon="logout" label="Logout" @click="logoutUser" />
       </q-toolbar>
     </q-header>
 
@@ -71,6 +73,12 @@ export default {
     return {
       leftDrawerOpen: false,
       essentialLinks: linksData
+    }
+  },
+  methods: {
+    logoutUser(){
+      localStorage.removeItem('authToken');
+      this.$router.push('/login');
     }
   }
 }

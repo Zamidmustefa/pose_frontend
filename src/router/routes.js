@@ -1,24 +1,49 @@
+import { requireAuth, redirectIfAuthenticated } from 'boot/authGuard';
+
 const routes = [{
         path: '/',
         component: () =>
             import ('layouts/MainLayout.vue'),
-        children: [
-            { path: '', component: () =>
-                    import ('pages/Index.vue') }
-        ]
+        beforeEnter: requireAuth, // Apply the route guard
+        children: [{
+            path: '',
+            component: () =>
+                import ('pages/Index.vue')
+        }]
     },
     {
         path: '/history',
         component: () =>
             import ('layouts/MainLayout.vue'),
-        children: [
-            { path: '', component: () =>
-                    import ('pages/History.vue') }
-        ]
+        beforeEnter: requireAuth, // Apply the route guard
+        children: [{
+            path: '',
+            component: () =>
+                import ('pages/History.vue')
+        }]
     },
-
-    // Always leave this as last one,
-    // but you can also remove it
+    {
+        path: '/login',
+        beforeEnter: redirectIfAuthenticated,
+        component: () =>
+            import ('layouts/AuthLayout.vue'),
+        children: [{
+            path: '',
+            component: () =>
+                import ('pages/Login.vue')
+        }]
+    },
+    {
+        path: '/register',
+        beforeEnter: redirectIfAuthenticated,
+        component: () =>
+            import ('layouts/AuthLayout.vue'),
+        children: [{
+            path: '',
+            component: () =>
+                import ('pages/Register.vue')
+        }]
+    },
     {
         path: '*',
         component: () =>
@@ -26,4 +51,4 @@ const routes = [{
     }
 ]
 
-export default routes
+export default routes;

@@ -101,12 +101,14 @@ export default {
       this.loading = true;
 
       const formData = new FormData();
+      const user_token = localStorage.getItem('authToken');
       formData.append('video', this.src_file);
 
       try {
-        const response = await axios.post('http://localhost:3000/upload', formData, {
+        const response = await axios.post('http://localhost:5000/upload', formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
+            'Authorization': `Bearer ${user_token}`
           },
         });
 
